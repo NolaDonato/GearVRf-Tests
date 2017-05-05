@@ -86,6 +86,8 @@ public class SceneObjectTests
         mRoot = scene.getRoot();
         mWaiter.assertNotNull(mRoot);
         mTestUtils.waitForAssetLoad();
+        while (tex.getId() == 0)
+            ;
         ctx.getEventReceiver().removeListener(texHandler);
     }
 
