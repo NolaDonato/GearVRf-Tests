@@ -9,6 +9,7 @@ import org.gearvrf.GVRAndroidResource;
 import org.gearvrf.GVRContext;
 import org.gearvrf.GVRExternalScene;
 import org.gearvrf.GVRMaterial;
+import org.gearvrf.GVRRenderData;
 import org.gearvrf.GVRScene;
 import org.gearvrf.GVRSceneObject;
 import org.gearvrf.GVRResourceVolume;
@@ -255,8 +256,7 @@ public class AssetImportTests
     @Test
     public void jassimpDeerOBJ() throws TimeoutException
     {
-        GVRAndroidResource res = new GVRAndroidResource(mTestUtils.getGvrContext(), R.raw.deerobj);
-        mHandler.loadTestModel(res, 1, 0, "jassimpDeerOBJ");
+        mHandler.loadTestModel("https://raw.githubusercontent.com/gearvrf/GearVRf-Tests/master/jassimp/animals/deer-obj.obj", 1, 0, "jassimpDeerOBJ");
     }
 
     @Test

@@ -7,6 +7,7 @@ import net.jodah.concurrentunit.Waiter;
 import org.gearvrf.GVRContext;
 import org.gearvrf.GVRExternalScene;
 import org.gearvrf.GVRMaterial;
+import org.gearvrf.GVRPointLight;
 import org.gearvrf.GVRScene;
 import org.gearvrf.GVRSceneObject;
 import org.gearvrf.scene_objects.GVRCubeSceneObject;

@@ -13,7 +13,7 @@ public class VertexColorShader extends GVRShaderTemplate
 
     public VertexColorShader(GVRContext gvrcontext)
     {
-        super("", 300);
+        super("", "", "float3 a_position float2 a_texcoord float4 a_color", 300);
         Context context = gvrcontext.getContext();
         fragTemplate = TextFile.readTextFile(context, R.raw.fragmentshader);
         vtxTemplate = TextFile.readTextFile(context, R.raw.vertexshader);
