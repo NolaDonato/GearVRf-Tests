@@ -197,7 +197,7 @@ public class SceneObjectTests
         GVRContext ctx  = mTestUtils.getGvrContext();
         GVRScene scene = mTestUtils.getMainScene();
         GVRMaterial redMtl = new GVRMaterial(ctx, GVRMaterial.GVRShaderType.Phong.ID);
-        GVRMaterial greenMtl = new GVRMaterial(ctx, GVRMaterial.GVRShaderType.Texture.ID);
+        GVRMaterial greenMtl = new GVRMaterial(ctx, GVRMaterial.GVRShaderType.Phong.ID);
         GVRSceneObject cylinder1 = new GVRCylinderSceneObject(ctx, true, redMtl);
         GVRSceneObject cylinder2 = new GVRCylinderSceneObject(ctx, false, greenMtl);
 
