@@ -70,7 +70,7 @@ public class LightTests
         GVRTexture checker = ctx.getAssetLoader().loadTexture(new GVRAndroidResource(ctx, R.drawable.checker));
         TextureEventHandler texHandler = new TextureEventHandler(mTestUtils, 1);
         GVRSceneObject background = new GVRCubeSceneObject(ctx, false, white);
-
+        GVRLight.setDefaultQuality(2);
         ctx.getEventReceiver().addListener(texHandler);
         mWaiter.assertNotNull(scene);
         mWaiter.assertNotNull(checker);
