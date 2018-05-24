@@ -38,7 +38,7 @@ public class LightTests
     private GVRSceneObject mRoot;
     private GVRSceneObject mSphere;
     private GVRSceneObject mCube;
-    private boolean mDoCompare = false;
+    private boolean mDoCompare = true;
 
     @Rule
 
