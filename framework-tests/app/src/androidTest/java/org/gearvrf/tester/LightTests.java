@@ -451,7 +451,7 @@ public class LightTests
         GVRLight.setDefaultQuality(1);
         directPoint();
         mTestUtils.waitForXFrames(2);
-        mTestUtils.screenShot(getClass().getSimpleName(), "directAndPointLightsIlluminate", mWaiter, mDoCompare);
+        mTestUtils.screenShot(getClass().getSimpleName(), "vertexDirectPoint", mWaiter, mDoCompare);
     }
 
     @Test
