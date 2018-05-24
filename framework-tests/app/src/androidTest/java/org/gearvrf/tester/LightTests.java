@@ -8,6 +8,7 @@ import net.jodah.concurrentunit.Waiter;
 import org.gearvrf.GVRAndroidResource;
 import org.gearvrf.GVRContext;
 import org.gearvrf.GVRDirectLight;
+import org.gearvrf.GVRLight;
 import org.gearvrf.GVRMaterial;
 import org.gearvrf.GVRPointLight;
 import org.gearvrf.GVRScene;
@@ -37,7 +38,7 @@ public class LightTests
     private GVRSceneObject mRoot;
     private GVRSceneObject mSphere;
     private GVRSceneObject mCube;
-    private boolean mDoCompare = true;
+    private boolean mDoCompare = false;
 
     @Rule
 
@@ -87,8 +88,7 @@ public class LightTests
         mRoot.addChildObject(background);
     }
 
-    @Test
-    public void pointLightAtFrontIlluminates() throws TimeoutException
+    public void point() throws TimeoutException
     {
         GVRContext ctx  = mTestUtils.getGvrContext();
         GVRSceneObject lightObj = new GVRSceneObject(ctx);
@@ -98,8 +98,24 @@ public class LightTests
         mRoot.addChildObject(lightObj);
         mRoot.addChildObject(mCube);
         mRoot.addChildObject(mSphere);
+    }
+
+    @Test
+    public void pointLightAtFrontIlluminates() throws TimeoutException
+    {
+        GVRLight.setDefaultQuality(2);
+        point();
         mTestUtils.waitForXFrames(2);
         mTestUtils.screenShot(getClass().getSimpleName(), "pointLightAtFrontIlluminates", mWaiter, mDoCompare);
+    }
+
+    @Test
+    public void vertexPoint() throws TimeoutException
+    {
+        GVRLight.setDefaultQuality(1);
+        point();
+        mTestUtils.waitForXFrames(2);
+        mTestUtils.screenShot(getClass().getSimpleName(), "vertexPoint", mWaiter, mDoCompare);
     }
 
     @Test
@@ -165,9 +181,7 @@ public class LightTests
         mTestUtils.screenShot(getClass().getSimpleName(), "pointLightAtCornerIlluminates", mWaiter, mDoCompare);
     }
 
-
-    @Test
-    public void pointLightHasSpecularReflection() throws TimeoutException
+    public void pointSpecular() throws TimeoutException
     {
         GVRContext ctx  = mTestUtils.getGvrContext();
         GVRSceneObject lightObj = new GVRSceneObject(ctx);
@@ -180,8 +194,24 @@ public class LightTests
         mRoot.addChildObject(lightObj);
         mRoot.addChildObject(mCube);
         mRoot.addChildObject(mSphere);
+    }
+
+    @Test
+    public void pointLightHasSpecularReflection() throws TimeoutException
+    {
+        GVRLight.setDefaultQuality(2);
+        pointSpecular();
         mTestUtils.waitForXFrames(2);
         mTestUtils.screenShot(getClass().getSimpleName(), "pointLightHasSpecularReflection", mWaiter, mDoCompare);
+    }
+
+    @Test
+    public void vertexPointSpecular() throws TimeoutException
+    {
+        GVRLight.setDefaultQuality(1);
+        pointSpecular();
+        mTestUtils.waitForXFrames(2);
+        mTestUtils.screenShot(getClass().getSimpleName(), "vertexPointSpecular", mWaiter, mDoCompare);
     }
 
     @Test
@@ -236,8 +266,7 @@ public class LightTests
         mTestUtils.screenShot(getClass().getSimpleName(), "spotLightAtCornerIlluminates", mWaiter, mDoCompare);
     }
 
-    @Test
-    public void spotLightHasSpecularReflection() throws TimeoutException
+    public void spotSpecular() throws TimeoutException
     {
         GVRContext ctx  = mTestUtils.getGvrContext();
         GVRSceneObject lightObj = new GVRSceneObject(ctx);
@@ -252,12 +281,27 @@ public class LightTests
         mSphere.getRenderData().getMaterial().setSpecularColor(0.8f, 0.8f, 0.8f, 1.0f);
         mSphere.getRenderData().getMaterial().setSpecularExponent(8.0f);
         mRoot.addChildObject(mSphere);
+    }
+
+    @Test
+    public void spotLightHasSpecularReflection() throws TimeoutException
+    {
+        GVRLight.setDefaultQuality(2);
+        spotSpecular();
         mTestUtils.waitForXFrames(2);
         mTestUtils.screenShot(getClass().getSimpleName(), "spotLightHasSpecularReflection", mWaiter, mDoCompare);
     }
 
     @Test
-    public void spotLightAtFrontAttenuates() throws TimeoutException
+    public void vertexSpotSpecular() throws TimeoutException
+    {
+        GVRLight.setDefaultQuality(1);
+        spotSpecular();
+        mTestUtils.waitForXFrames(2);
+        mTestUtils.screenShot(getClass().getSimpleName(), "vertexSpotSpecular", mWaiter, mDoCompare);
+    }
+
+    public void spotAttenuation() throws TimeoutException
     {
         GVRContext ctx  = mTestUtils.getGvrContext();
         GVRSceneObject lightObj = new GVRSceneObject(ctx);
@@ -270,8 +314,24 @@ public class LightTests
         mRoot.addChildObject(lightObj);
         mRoot.addChildObject(mCube);
         mRoot.addChildObject(mSphere);
+    }
+
+    @Test
+    public void spotLightAtFrontAttenuates() throws TimeoutException
+    {
+        GVRLight.setDefaultQuality(2);
+        spotAttenuation();
         mTestUtils.waitForXFrames(2);
         mTestUtils.screenShot(getClass().getSimpleName(), "spotLightAtFrontAttenuates", mWaiter, mDoCompare);
+    }
+
+    @Test
+    public void vertexSpotAttenuates() throws TimeoutException
+    {
+        GVRLight.setDefaultQuality(1);
+        spotAttenuation();
+        mTestUtils.waitForXFrames(2);
+        mTestUtils.screenShot(getClass().getSimpleName(), "vertexSpotAttenuates", mWaiter, mDoCompare);
     }
 
     @Test
@@ -290,9 +350,7 @@ public class LightTests
         mTestUtils.screenShot(getClass().getSimpleName(), "directLightRotatedIlluminates", mWaiter, mDoCompare);
     }
 
-
-    @Test
-    public void directLightIlluminatesInColor() throws TimeoutException
+    public void directColor() throws TimeoutException
     {
         GVRContext ctx  = mTestUtils.getGvrContext();
         GVRSceneObject lightObj = new GVRSceneObject(ctx);
@@ -303,12 +361,27 @@ public class LightTests
         lightObj.getTransform().rotateByAxis(-45, 0, 1, 0);
         lightObj.attachComponent(light);
         mRoot.addChildObject(lightObj);
+    }
+
+    @Test
+    public void directLightIlluminatesInColor() throws TimeoutException
+    {
+        GVRLight.setDefaultQuality(2);
+        directColor();
         mTestUtils.waitForXFrames(2);
         mTestUtils.screenShot(getClass().getSimpleName(), "directLightIlluminatesInColor", mWaiter, mDoCompare);
     }
 
     @Test
-    public void directLightHasSpecularReflection() throws TimeoutException
+    public void vertexDirectColor() throws TimeoutException
+    {
+        GVRLight.setDefaultQuality(1);
+        directColor();
+        mTestUtils.waitForXFrames(2);
+        mTestUtils.screenShot(getClass().getSimpleName(), "vertexDirectColor", mWaiter, mDoCompare);
+    }
+
+    public void directSpecular() throws TimeoutException
     {
         GVRContext ctx  = mTestUtils.getGvrContext();
         GVRSceneObject lightObj = new GVRSceneObject(ctx);
@@ -321,13 +394,29 @@ public class LightTests
         mRoot.addChildObject(lightObj);
         mRoot.addChildObject(mCube);
         mRoot.addChildObject(mSphere);
+    }
+
+    @Test
+    public void directLightHasSpecularReflection() throws TimeoutException
+    {
+        GVRLight.setDefaultQuality(2);
+        directSpecular();
+        GVRContext ctx  = mTestUtils.getGvrContext();
         mTestUtils.waitForXFrames(2);
         mTestUtils.screenShot(getClass().getSimpleName(), "directLightHasSpecularReflection", mWaiter, mDoCompare);
     }
 
-
     @Test
-    public void directAndPointLightsIlluminate() throws TimeoutException
+    public void vertexDirectSpecular() throws TimeoutException
+    {
+        GVRLight.setDefaultQuality(1);
+        directSpecular();
+        GVRContext ctx  = mTestUtils.getGvrContext();
+        mTestUtils.waitForXFrames(2);
+        mTestUtils.screenShot(getClass().getSimpleName(), "vertexDirectSpecular", mWaiter, mDoCompare);
+    }
+
+    public void directPoint() throws TimeoutException
     {
         GVRContext ctx  = mTestUtils.getGvrContext();
         GVRSceneObject lightObj1 = new GVRSceneObject(ctx);
@@ -345,6 +434,22 @@ public class LightTests
         mRoot.addChildObject(lightObj1);
         mRoot.addChildObject(lightObj2);
         mRoot.addChildObject(mSphere);
+    }
+
+    @Test
+    public void directAndPointLightsIlluminate() throws TimeoutException
+    {
+        GVRLight.setDefaultQuality(2);
+        directPoint();
+        mTestUtils.waitForXFrames(2);
+        mTestUtils.screenShot(getClass().getSimpleName(), "directAndPointLightsIlluminate", mWaiter, mDoCompare);
+    }
+
+    @Test
+    public void vertexDirectPoint() throws TimeoutException
+    {
+        GVRLight.setDefaultQuality(1);
+        directPoint();
         mTestUtils.waitForXFrames(2);
         mTestUtils.screenShot(getClass().getSimpleName(), "directAndPointLightsIlluminate", mWaiter, mDoCompare);
     }
@@ -400,8 +505,7 @@ public class LightTests
         mTestUtils.screenShot(getClass().getSimpleName(), "directAndPointLightsIlluminate", mWaiter, mDoCompare);
     }
 
-    @Test
-    public void twoSpotLightsIlluminate() throws TimeoutException
+    public void spot2() throws TimeoutException
     {
         GVRContext ctx  = mTestUtils.getGvrContext();
         GVRSceneObject lightObj1 = new GVRSceneObject(ctx);
@@ -428,7 +532,92 @@ public class LightTests
         mRoot.addChildObject(lightObj2);
         mRoot.addChildObject(mCube);
         mRoot.addChildObject(mSphere);
+    }
+
+    @Test
+    public void twoSpotLightsIlluminate() throws TimeoutException
+    {
+        GVRLight.setDefaultQuality(2);
+        spot2();
         mTestUtils.waitForXFrames(2);
         mTestUtils.screenShot(getClass().getSimpleName(), "twoSpotLightsIlluminate", mWaiter, mDoCompare);
+    }
+
+    @Test
+    public void twoVertexSpotLights() throws TimeoutException
+    {
+        GVRLight.setDefaultQuality(1);
+        spot2();
+        mTestUtils.waitForXFrames(2);
+        mTestUtils.screenShot(getClass().getSimpleName(), "twoVertexSpotLights", mWaiter, mDoCompare);
+    }
+
+    public void pointSpot2() throws TimeoutException
+    {
+        GVRContext ctx  = mTestUtils.getGvrContext();
+        GVRSceneObject lightObj1 = new GVRSceneObject(ctx);
+        GVRSpotLight light1 = new GVRSpotLight(ctx);
+        GVRSceneObject lightObj2 = new GVRSceneObject(ctx);
+        GVRSpotLight light2 = new GVRSpotLight(ctx);
+        GVRSceneObject lightObj3 = new GVRSceneObject(ctx);
+        GVRPointLight light3 = new GVRPointLight(ctx);
+
+        light1.setInnerConeAngle(20.0f);
+        light1.setOuterConeAngle(30.0f);
+        light1.setDiffuseIntensity(1.0f, 0.3f, 0.3f, 1.0f);
+        light2.setInnerConeAngle(10.0f);
+        light2.setOuterConeAngle(20.0f);
+        light2.setDiffuseIntensity(0.3f, 1.0f, 0.3f, 1.0f);
+        light3.setFloat("radius", 1.5f);
+        light3.setDiffuseIntensity(0, 0, 1, 1.0f);
+        lightObj1.setName("light1");
+        lightObj2.setName("light2");
+        lightObj3.setName("light3");
+        lightObj1.getTransform().rotateByAxis(-45, 0, 1, 0);
+        lightObj1.getTransform().setPosition(-1, 0, 1);
+        lightObj2.getTransform().rotateByAxis(45, 0, 1, 0);
+        lightObj2.getTransform().setPosition(2, 0, 2);
+        lightObj3.getTransform().setPosition(0, 0.5f, -1);
+        lightObj3.attachComponent(light3);
+        lightObj1.attachComponent(light1);
+        lightObj2.attachComponent(light2);
+        mSphere.getRenderData().getMaterial().setDiffuseColor(0.8f, 0.8f, 0.8f, 1.0f);
+        mSphere.getRenderData().getMaterial().setSpecularColor(0.8f, 0.8f, 0.8f, 1.0f);
+        mSphere.getRenderData().getMaterial().setSpecularExponent(8.0f);
+        mRoot.addChildObject(lightObj1);
+        mRoot.addChildObject(lightObj2);
+        mRoot.addChildObject(lightObj3);
+        mRoot.addChildObject(mCube);
+        mRoot.addChildObject(mSphere);
+    }
+
+    @Test
+    public void threePixelLights() throws TimeoutException
+    {
+        GVRLight.setDefaultQuality(2);
+        pointSpot2();
+        mTestUtils.waitForXFrames(2);
+        mTestUtils.screenShot(getClass().getSimpleName(), "threePixelLights", mWaiter, mDoCompare);
+    }
+
+    @Test
+    public void threeVertexLights() throws TimeoutException
+    {
+        GVRLight.setDefaultQuality(1);
+        pointSpot2();
+        mTestUtils.waitForXFrames(2);
+        mTestUtils.screenShot(getClass().getSimpleName(), "threeVertexLights", mWaiter, mDoCompare);
+    }
+
+    @Test
+    public void vertexPointPixelSpot2() throws TimeoutException
+    {
+        GVRLight.setDefaultQuality(2);
+        pointSpot2();
+        GVRSceneObject sceneObj = mTestUtils.getMainScene().getSceneObjectByName("light3");
+        GVRLight light = (GVRLight) sceneObj.getComponent(GVRLight.getComponentType());
+        light.setQuality(1);
+        mTestUtils.waitForXFrames(2);
+        mTestUtils.screenShot(getClass().getSimpleName(), "vertexPointPixelSpot2", mWaiter, mDoCompare);
     }
 }
